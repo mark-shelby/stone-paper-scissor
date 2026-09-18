@@ -7,7 +7,74 @@
 </head>
 <body>
     <script>
-        console.log("Heelo");
+        // console.log("Heelo");
+        let compScore=0;
+        let humanScore=0;
+
+        function getComputerChoice(){
+            let choice=Math.floor(Math.random()*3)+1;
+            // console.log(choice);
+            return choice;
+        }
+        
+        function getHumanChoice(){
+            let x=prompt("Enter your choice : rock , paper or scissor").toUpperCase();
+            if(x==="ROCK") return 1;
+            else if(x==="PAPER") return 2;
+            return 3;
+            // return x;
+        }
+       
+        function playRound(c,h){
+            if(h===1){
+                if(c===1) console.log("Tie !");
+                else if(c===2) {
+                    console.log("Computer wins !");
+                     compScore+=1;
+                }
+                else{
+                    console.log("You wins !"); 
+                    humanScore+=1;
+                }
+            }
+            else if(h===2){
+                if(c===1) {
+                    console.log("You wins !");
+                     humanScore+=1;
+                }
+                else if(c===2)  console.log("Tie !");
+                else {
+                    console.log("Computer wins !");
+                     compScore+=1;
+                }
+            }
+            else{
+                if(c===1) {
+                    console.log("Computer wins !");
+                 compScore+=1;
+                }
+                else if(c===2) {
+                    console.log("You wins !");
+                     humanScore+=1;
+                }
+                else  console.log("Tie !");
+            }
+        }
+        
+        let x=getHumanChoice();
+        
+        function playGame(){
+            for(let i=0 ; i<5 ; i++){
+                playRound(getComputerChoice(),x);
+            }
+        }
+        playGame();
+        if(humanScore>compScore) console.log("You win finally !");
+        else if(humanScore<compScore) console.log("Computer wins finally !");
+        else console.log("Tied !");
+        
+        // getComputerChoice();
+        // getHumanChoice();
     </script>
 </body>
 </html>
