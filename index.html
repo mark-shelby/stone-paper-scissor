@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="org"></div>
     <script>
         // console.log("Heelo");
         let compScore=0;
@@ -26,52 +27,69 @@
         }
        
         function playRound(c,h){
-            if(h===1){
-                if(c===1) console.log("Tie !");
-                else if(c===2) {
-                    console.log("Computer wins !");
-                     compScore+=1;
-                }
-                else{
-                    console.log("You wins !"); 
-                    humanScore+=1;
-                }
+            if (humanScore >= 5 || compScore >= 5) return;
+
+            if(h === 1) {
+                if(c === 1) roundResult.textContent = "Tie!";
+                else if(c === 2) { roundResult.textContent = "Computer wins!"; compScore++; }
+                else { roundResult.textContent = "You win!"; humanScore++; }
             }
-            else if(h===2){
-                if(c===1) {
-                    console.log("You wins !");
-                     humanScore+=1;
-                }
-                else if(c===2)  console.log("Tie !");
-                else {
-                    console.log("Computer wins !");
-                     compScore+=1;
-                }
+            else if(h === 2) {
+                if(c === 1) { roundResult.textContent = "You win!"; humanScore++; }
+                else if(c === 2) roundResult.textContent = "Tie!";
+                else { roundResult.textContent = "Computer wins!"; compScore++; }
             }
-            else{
-                if(c===1) {
-                    console.log("Computer wins !");
-                 compScore+=1;
-                }
-                else if(c===2) {
-                    console.log("You wins !");
-                     humanScore+=1;
-                }
-                else  console.log("Tie !");
+            else {
+                if(c === 1) { roundResult.textContent = "Computer wins!"; compScore++; }
+                else if(c === 2) { roundResult.textContent = "You win!"; humanScore++; }
+                else roundResult.textContent = "Tie!";
+            }
+
+            // Display running score
+            runningScore.textContent = `Player: ${humanScore} | Computer: ${compScore}`;
+
+            // Check if someone reached 5 points
+            if (humanScore === 5) {
+                finalWinner.textContent = "You win the game!";
+                disableButtons();
+            } else if (compScore === 5) {
+                finalWinner.textContent = "Computer wins the game!";
+                disableButtons();
             }
         }
         
-        let x=getHumanChoice();
-        
-        function playGame(){
-            for(let i=0 ; i<5 ; i++){
-                playRound(getComputerChoice(),x);
-            }
+        const div=document.querySelector("div");
+        // let x=getHumanChoice();
+        function disableButtons() {
+            btn1.disabled = true;
+            btn2.disabled = true;
+            btn3.disabled = true;
         }
-        playGame();
-        if(humanScore>compScore) console.log("You win finally !");
-        else if(humanScore<compScore) console.log("Computer wins finally !");
-        else console.log("Tied !");
+        
+        const btn1=document.createElement("button");
+        btn1.textContent="ROCK";
+        const btn2=document.createElement("button");
+        btn2.textContent="PAPER";
+        const btn3=document.createElement("button");
+        btn3.textContent="SCISSOR";
+
+        const roundResult = document.createElement("p");
+        const runningScore = document.createElement("h3");
+        const finalWinner = document.createElement("h2");
+
+        div.appendChild(btn1);
+        div.appendChild(btn2);
+        div.appendChild(btn3);
+        div.appendChild(roundResult);
+        div.appendChild(runningScore);
+        div.appendChild(finalWinner);
+
+        
+        
+
+        btn1.addEventListener('click', () => { playRound(getComputerChoice(), 1) });
+        btn2.addEventListener('click', () => { playRound(getComputerChoice(), 2) });
+        btn3.addEventListener('click', () => { playRound(getComputerChoice(), 3) });
         
         // getComputerChoice();
         // getHumanChoice();
